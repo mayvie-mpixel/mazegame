@@ -1,0 +1,19 @@
+# Feature roadmap
+
+A non-comprehensive list of features the game should eventually have.
+
+# Procedural world generation:
+ -Relatively navigable maze made of easily-mineable walls in case there's no walkable path from A to B (populated chunk-by-chunk using origin shift)
+ -Cave biomes, large patches of stone and air (populated using fractal noise)
+ -Goo biomes, most empty space is filled with easily-mineable slime-type blocks
+ -Complex structures, some introducing this game's analog to redstone and enchanting/commands
+ -Evil maze biome x3, that slowly fills with something toxic to the player and even the maze walls, probably lava, but i was originally considering something like mycelium
+
+# Complex entity interaction:
+ -Player has a reputation value in the eyes of every other "smart" entity, e.g. villager, based on how they treat the nearby environment and the things that live in it, which effects things like trading with them, and word can spread slowly from village to village
+
+# Enchanting/commanding:
+ -I haven't landed on anything specific for this, but there's an idea with some block that takes in a book and, in survival, applies that book to an item to enchant it, but in creative, that book can be edited, and on the inside it's ultimately just a command that can be changed to do basically anything
+
+# Functional blocks:
+ -Lasers, lots of lasers, laser emitters, laser tubes, laser-activated pistons that can be used to obstruct other lasers enabling logic, etc.
