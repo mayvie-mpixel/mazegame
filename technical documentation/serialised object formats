@@ -1,12 +1,15 @@
 serialised tile data format (16 bytes)
 
-   -0-1 -2-3-4-5-6-7-8-9-A-B -C -D-E-F
-0x 0123 456789ABCDEF01234567 89 ABCDEF
+   -0-1 -2-3 -4 -5-6-7-8-9-A-B -C -D-E-F
+0x 0123 4567 89 ABCDEF01234567 89 ABCDEF
 
 -0-1                : block ID
--2-3-4-5-6-7-8-9-A-B: block state info (powered, orientation, etc.)
+-2-3                : backdrop block ID
+-4                  : backdrop block orientation
+-5-6-7-8-9-A-B      : block state info (powered, orientation, etc.)
 -C                  : laser info (presence or absence of laser beam in 4 directions)
 -D-E-F              : pointer (for container blocks)
+
 
 
 
