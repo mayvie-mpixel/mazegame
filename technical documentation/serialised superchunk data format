@@ -1,0 +1,3 @@
+serialised superchunk data format
+
+a superchunk is a 16x16 area of chunks, a chunk being 16x16 tiles, including entities within the bounds of the chunk.
