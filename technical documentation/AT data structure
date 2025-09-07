@@ -78,7 +78,7 @@ the second way is by indexing with numbers. the x position of the bunny can also
 
 these indexing methods can be used simultaneously within the same tree path, as well, for example, "-bunny:pos:1" also accesses the y position of the bunny.
 
-individual values can be indexed byte-by-byte, as well. "-bunny:pos:x:1" returns the second byte of the x position. value metadata is excluded from this. For example, indexing the below AT tree with "var:0" fetches 0x64, not 0x11.
+individual values can be indexed byte-by-byte, as well. "-bunny:pos:x:1" returns the second byte of the x position. value metadata is excluded from this. for example, indexing the below AT tree with "var:0" fetches 0x64, not 0x11.
 
 plaintext tree | full data | raw value
 ======================================
