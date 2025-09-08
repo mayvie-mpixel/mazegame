@@ -29,10 +29,10 @@ byte value | datatype
 
 string:
 
-a string's bytes are interleaved with 0x00s between them, and the byte after the last character in the string is 0xFF. the datatype's on-screen name is "s".
+a string's bytes are all stored consecutively, with a 0x00 byte at the end to termimate the string. the datatype's on-screen name is "s".
 
-s "Wow!" -> 00 57 00 6F 00 77 00 21 FF
-             .  W  .  o  .  w  .  !
+s "Wow!" -> 00 57 6F 77 21 00
+             .  W  o  w  !  .
 
 
 boolean:
