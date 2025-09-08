@@ -5,7 +5,7 @@ a superchunk is a 16x16 area of chunks, a chunk being 16x16 tiles, including ent
 the space from offset 0x0 to 0xFF is reserved for a silly header that might have a funny easter egg message or something, i dunno
 0x100 to 0x4FF is filled in with 256 4-byte pointers to each chunk's data.
 
-a chunk is composed of 2KB (1536 bytes) of tile data, followed by up to 16MB (16775680 bytes) for entities and other data, all entities in the chunk being placed first, then ended with a single 0xFF byte. chunks have no header, they just start with tile data.
+a chunk is composed of 2KB (1536 bytes) of tile data, followed by up to 16MB (16775680 bytes) for entities and other data (all entities in the chunk are placed first with a single 0xFF byte after the last one. the remaining space is for AT trees.). chunks have no header, they just start with tile data.
 
 
 serialised tile data format: (6 bytes per tile, no gaps between tiles)
