@@ -3,39 +3,24 @@ serialised superchunk data format
 a superchunk is a 16x16 area of chunks, a chunk being 16x16 tiles, including entities within the bounds of the chunk.
 
 the space from offset 0x0 to 0xFF is reserved for a silly header that might have a funny easter egg message or something, i dunno
-0x100 to 0x3FF is filled in with 256 3-byte pointers to the chunk data
+0x100 to 0x4FF is filled in with 256 4-byte pointers to each chunk's data.
 
-a chunk is composed of 4KB (4096 bytes) of tile data, followed by up to 16MB (16773120 bytes) for entity and container data. chunks have no header, they just start with tile data.
-
-
-serialised tile data format: (16 bytes per tile, no gaps between tiles)
-   -0-1 -2-3 -4 -5-6-7-8-9-A-B -C -D-E-F
-0x 0123 4567 89 ABCDEF01234567 89 ABCDEF
-
--0-1                : block ID
--2-3                : backdrop block ID
--4                  : backdrop block orientation
--5-6-7-8-9-A-B      : block state info (powered, orientation, etc.)
--C                  : laser info (presence or absence of laser beam in 4 directions)
--D-E-F              : pointer (for container blocks)
+a chunk is composed of 2KB (1536 bytes) of tile data, followed by up to 16MB (16775680 bytes) for entities and other data, all entities in the chunk being placed first, then ended with a single 0xFF byte. chunks have no header, they just start with tile data.
 
 
-serialised item data format: (16 bytes per item, no gaps between items)
-   -0-1 -2-3-4-5-6-7-8 -9-A -B-C -D-E-F
-0x 0123 456789ABCDEF01 2345 6789 ABCDEF
+serialised tile data format: (6 bytes per tile, no gaps between tiles)
 
--0-1          : item ID
--2-3-4-5-6-7-8: enchantments
--B-C          : durability (uses left before item breaks)
--D-E-F        : pointer (for container items) / quantity (for non-container items)
+   -0-1 -2-3-4-5 
+0x 0123 456789AB
+
+-0-1    : block ID
+-2-3-4-5: AT tree pointer (relative to start of this chunk, points to an AT tree)
 
 
-serialised entity data format (16 bytes per entity, no gaps between entities)
-   -0-1 -2-3 -4-5 -6-7-8-9-A-B-C -D-E-F
-0x 0123 4567 89AB CDEF0123456789 ABCDEF
+serialised entity data format (x bytes per entity, no gaps between entities)
 
--0-1          : entity ID
--2-3          : X position within chunk
--4-5          : Y position within chunk
--6-7-8-9-A-B-C: entity state info (despawn time, behavior, health, potion effects, etc.)
--D-E-F        : pointer (used if entity is item)
+   -0-1 -2-3-4-5
+0x 0123 456789AB
+
+-0-1    : entity type ID
+-2-3-4-5: AT tree pointer (relative to start of this chunk, points to an AT tree)
