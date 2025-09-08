@@ -3,7 +3,7 @@ AT tree roots are pointed at by tile pointers (the 3 bytes at the end of a tile 
 
 
 AT list:
-an AT list is a list that can be composed of key-value pairs (KVPs) and key-pointer pairs (KPPs). there is an 0xFF byte after the last element in the list, used to specify its end.
+an AT list is a list that can be composed of key-value pairs (KVPs) and/or key-pointer pairs (KPPs), or only anonymous nodes (ANs). there is an 0xFF byte after the last element in the list, used to specify its end.
 
 KVP:
 a KVP (key-value pair) is composed of a plain ASCII text key that ends in a colon and doesn't start with a dash (ex. "facing:") and a value.
@@ -12,6 +12,9 @@ a KVP (key-value pair) is composed of a plain ASCII text key that ends in a colo
 KPP:
 a KPP (key-pointer pair) is composed of a plain ASCII text key that ends with a colon and must start with a dash (ex. "-enchantments:") followed by a pointer to another AT list.
 
+
+AN:
+an AN (anonymous node) is like a KVP, but the name is just ":" for values, or "-:" for pointers to other lists. an AT list made of ANs must be indexed numerically.
 
 Value:
 a value is a super-generic structure that can hold any kind of arbitrary variable. the first byte specifies the type like so:
