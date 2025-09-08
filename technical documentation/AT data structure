@@ -1,5 +1,5 @@
 ArbiTree data structure (AT):
-AT tree roots are pointed at by tile pointers (the 3 bytes at the end of a tile in a chunk's tile array), and that pointer always points at a location in the serialised chunk data, relative to the starting offset of the chunk within the superchunk file. If that pointer is 0x0, the tree is interpreted as empty. Otherwise, the tree is interpreted as existent. Starting at the location the pointer points to, there is an AT list.
+AT tree roots are pointed at by tile pointers (the 4 bytes at the end of a tile in a chunk's tile array), and that pointer always points at a location in the serialised chunk data, relative to the starting offset of the chunk within the superchunk file. If that pointer is 0x0, the tree is interpreted as empty. Otherwise, the tree is interpreted as existent. Starting at the location the pointer points to, there is an AT list.
 
 
 AT list:
@@ -10,7 +10,7 @@ a KVP (key-value pair) is composed of a plain ASCII text key that ends in a colo
 
 
 KPP:
-a KPP (key-pointer pair) is composed of a plain ASCII text key that ends with a colon and must start with a dash (ex. "-enchantments:") followed by a pointer to another AT list.
+a KPP (key-pointer pair) is composed of a plain ASCII text key that ends with a colon and must start with a dash (ex. "-enchantments:") followed by a 32-bit pointer to another AT list.
 
 
 AN:
@@ -58,14 +58,14 @@ i8 127  -> 10 FF
 
 int16, int32, and int64 work just like int8, with offsets of -32,768, -2,147,483,648, and -9,223,372,036,854,775,808 respectively. their bytes are arranged little-endian. the datatypes' on-screen names are "i16", "i32", and "i64" respectively.
 
-i16 256   -> 11 FF 10
+i16 256   -> 11 00 81
 i32 100   -> 12 64 00 00 10
 i64 -1000 -> 13 17 FC FF FF FF FF FF 7F
 
 
 dynamic number:
 
-a dynamic number is a fixed-point number whose integer width and decimal width, in bytes, are specified with the second and third bytes. for example, 1F 00 02 ... represents a dynamic number with a 0 bit (0 byte) integer part and a 16-bit (2 bytes) decimal part. the bytes of the full fixed-point number are arranged little-endian. The datatype's on-screen name is "d[byte length of integer part in decimal].[byte length of fractional part in decimal]".
+a dynamic number is a fixed-point number whose integer width and decimal width, in bytes, are specified with the second and third bytes. for example, 1F 00 02 ... represents a dynamic number with a 0 bit (0 byte) integer part and a 16-bit (2 bytes) decimal part. the bytes of the full fixed-point number are arranged little-endian. the datatype's on-screen name is "d[byte length of integer part in decimal].[byte length of fractional part in decimal]".
 
 d1.1 12.125  -> 1F 01 01 20 0C
 d2.4 60000.1 -> 1F 02 04 99 99 99 19 60 EA
@@ -73,11 +73,11 @@ d2.4 60000.1 -> 1F 02 04 99 99 99 19 60 EA
 
 indexing:
 
-specifying a specific item somewhere in an AT tree can be done in two ways. the first is done by concatenating the names of the lineage from the root to the item, placing colons between each. "-bunny:-pos:y" will return the value of the y position of the bunny the below AT tree belongs to, "d1.2 2.5".
+accessing a specific item somewhere in an AT tree can be done in two ways. the first is done by concatenating the names of the lineage from the root to the item, placing colons between each. "-bunny:-pos:y" will return the value of the y position of the bunny the below AT tree belongs to, "d1.2 2.5".
 
 -bunny:(-pos:(x:d1.2 3.0,y:d1.2 2.5),-behaviors:(following_player:b true, player_affinity:i8 60))
 
-the second way is by indexing with numbers. the x position of the bunny can also be accessed with "-bunny:0:1". This indexes AT lists in alphabetical order, picking the first if the index number is 0, the second if the index number is 1, and so on.
+the second way is by indexing with numbers. the x position of the bunny can also be accessed with "-bunny:0:1". This indexes AT lists in alphabetical order, picking the first if the index number is 0, the second if the index number is 1, and so on. numerical indexing is necessary for AT lists made of anonymous nodes.
 
 these indexing methods can be used simultaneously within the same tree path, as well, for example, "-bunny:pos:1" also accesses the y position of the bunny.
 
